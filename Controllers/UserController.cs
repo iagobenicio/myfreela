@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
+using Sigin = Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using myfreela.context;
@@ -65,6 +66,29 @@ namespace myfreela.Controllers
             return View();
 
         }
+        [HttpPost]
+        public async Task<IActionResult> Login(LoginViewModel userViewModel)
+        {
+            if (ModelState.IsValid)
+            {    
+                var resultLogin = await _sigInManager.PasswordSignInAsync(userViewModel.UserName!,userViewModel.Password!,false,false);
+
+                if (resultLogin.Succeeded)
+                {
+                    return RedirectToAction("Index","Home");
+                }
+                if (resultLogin == Sigin.SignInResult.Failed)
+                {   
+                    Console.WriteLine("erro 1");
+                    ModelState.AddModelError("","Falha ao logar");
+                }else
+                {   
+                    Console.WriteLine("erro 2");
+                    ModelState.AddModelError("","N"); 
+                }     
+            }
+            return RedirectToAction(nameof(Index));
+        }
 
         private void MaperViewModelToDbModel(RegisterViewModel userViewModel, IdentityUser<int> userDB)
         {
@@ -76,5 +100,6 @@ namespace myfreela.Controllers
             userDB.LockoutEnabled = false;
             userDB.AccessFailedCount = 0;
         }
+
     }
 }

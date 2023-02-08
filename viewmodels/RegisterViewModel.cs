@@ -10,9 +10,9 @@ namespace myfreela.viewmodels
     {   
         public int Id { get; set; }
         
-        [Display(Name = "Nome de usuário")]
-        [Required(ErrorMessage = "Preencha nome de usuário")]
-        public string? UserName { get; set; }
+        [Required(ErrorMessage = "Este campo é obrigatório")]
+        [EmailAddress(ErrorMessage = "Endereço de email inválido")]
+        public string? Email { get; set; }
 
         [Display(Name = "Confirmar senha")]
         [Required(ErrorMessage = "Este campo é obrigatório")]
