@@ -50,7 +50,7 @@ namespace myfreela.Controllers
                 }
                 userDB = new User();
                 MaperViewModelToDbModel(userViewModel,userDB);
-                var result = await _user.CreateAsync(userDB);
+                var result = await _user.CreateAsync(userDB,userViewModel.Password!);
 
                 if (result.Succeeded)
                 {   
@@ -70,7 +70,6 @@ namespace myfreela.Controllers
         {
             userDB.Email = userViewModel.Email;
             userDB.UserName = userViewModel.UserName;
-            userDB.PasswordHash = userViewModel.Password;
             userDB.EmailConfirmed = false;
             userDB.PhoneNumberConfirmed = false;
             userDB.TwoFactorEnabled = false;

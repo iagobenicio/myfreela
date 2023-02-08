@@ -12,6 +12,9 @@ builder.Services.AddDbContext<MyFreelaContext>(options => options.UseSqlServer(b
 builder.Services.AddIdentity<User,IdentityRole<int>>(
     options=>{
         options.User.RequireUniqueEmail = true;
+        options.Password.RequireNonAlphanumeric = false;
+        options.Password.RequireLowercase = false;
+        options.Password.RequireUppercase = false;
     }).AddEntityFrameworkStores<MyFreelaContext>().AddDefaultTokenProviders();
 
 var app = builder.Build();
