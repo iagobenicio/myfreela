@@ -16,7 +16,6 @@ namespace myfreela.context
         {
 
         }
-        public DbSet<User>? user {get; set;}
 
     }
 }

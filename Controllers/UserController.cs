@@ -8,56 +8,74 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using myfreela.context;
 using myfreela.viewmodels;
+using Microsoft.EntityFrameworkCore;
+using myfreela.Models;
 
 namespace myfreela.Controllers
 {   
-    [ApiController]
-    [Route("[controller]")]
+
     public class UserController : Controller
     {
-        private readonly UserManager<IdentityUser<int>> _user;
-        private readonly SignInManager<IdentityUser<int>> _sigInManager;
+        private readonly UserManager<User> _user;
+        private readonly SignInManager<User> _sigInManager;
 
-        public UserController(UserManager<IdentityUser<int>> user, SignInManager<IdentityUser<int>> signInManager)
+        public UserController(UserManager<User> user, SignInManager<User> signInManager)
         {
             _user = user;
             _sigInManager = signInManager;
         }
         
-        [HttpGet("login")]
+
         public IActionResult Index()
         {
             return View();
         }
 
-        [HttpGet("register")]
         public IActionResult Register()
         {
             return View();
         }
 
         [HttpPost]
-        public IActionResult Register(RegisterViewModel model)
+        public async Task<IActionResult> Register(RegisterViewModel userViewModel)
         {
-            if (!ModelState.IsValid)
-            {
-                return NotFound();
+            if (ModelState.IsValid)
+            {   
+                var userDB = await _user.FindByEmailAsync(userViewModel.Email!);
+                
+                if (userDB != null)
+                {
+                    ModelState.AddModelError("Email","Já existe um usuário com este email");
+                    return View(userViewModel);
+                }
+                userDB = new User();
+                MaperViewModelToDbModel(userViewModel,userDB);
+                var result = await _user.CreateAsync(userDB);
+
+                if (result.Succeeded)
+                {   
+                    return View();
+                }
+                foreach (var erro in result.Errors)
+                {
+                    ModelState.AddModelError("",erro.Description);
+                }
+                return View();
             }
-        
             return View();
 
         }
 
-        private IdentityUser<int> MaperViewModelToDbModel(RegisterViewModel userViewModel, IdentityUser<int> userDB)
+        private void MaperViewModelToDbModel(RegisterViewModel userViewModel, IdentityUser<int> userDB)
         {
             userDB.Email = userViewModel.Email;
+            userDB.UserName = userViewModel.UserName;
+            userDB.PasswordHash = userViewModel.Password;
             userDB.EmailConfirmed = false;
             userDB.PhoneNumberConfirmed = false;
             userDB.TwoFactorEnabled = false;
             userDB.LockoutEnabled = false;
             userDB.AccessFailedCount = 0;
-
-            return userDB;
         }
     }
 }

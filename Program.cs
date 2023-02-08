@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using myfreela.context;
+using myfreela.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,7 +9,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<MyFreelaContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ConexaoPadrao")));
-builder.Services.AddIdentity<IdentityUser<int>,IdentityRole<int>>().AddEntityFrameworkStores<MyFreelaContext>().AddDefaultTokenProviders();
+builder.Services.AddIdentity<User,IdentityRole<int>>(
+    options=>{
+        options.User.RequireUniqueEmail = true;
+    }).AddEntityFrameworkStores<MyFreelaContext>().AddDefaultTokenProviders();
 
 var app = builder.Build();
 
