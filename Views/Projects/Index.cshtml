@@ -1,0 +1,40 @@
+@model IEnumerable<Projects>
+
+@{
+    ViewData["title"] = "Projetos";
+}
+
+
+<div class="row">
+    <div class="cold-md-4">
+        <input type="submit" value="Cadastrar" class="btn btn-primary">
+    </div>
+    <div class="col-md-12">
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Utimo restart</th>
+                    <th scope="col">Preço/h</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Projeto freela</td>
+                    <td>09/02/2022 18:36</td>
+                    <td>R$ 35,00</td>
+                </tr>
+                <tr>
+                    <td>Projeto mobile</td>
+                    <td>09/05/2022 18:23</td>
+                    <td>R$ 25,00</td>
+                </tr>
+                <tr>
+                    <td>Projeto front</td>
+                    <td>09/03/2022 18:21</td>
+                    <td>R$ 25,00</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

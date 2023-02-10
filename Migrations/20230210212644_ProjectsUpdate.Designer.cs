@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using myfreela.context;
 
@@ -11,9 +12,11 @@ using myfreela.context;
 namespace myfreela.Migrations
 {
     [DbContext(typeof(MyFreelaContext))]
-    partial class MyFreelaContextModelSnapshot : ModelSnapshot
+    [Migration("20230210212644_ProjectsUpdate")]
+    partial class ProjectsUpdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -11,7 +11,9 @@ namespace myfreela.Models
         public string? Name { get; set; }
         public decimal PriceByHours { get; set; }
         public decimal TotalValue { get; set; }
-        public DateTime LastStarted { get; set; }
+        public ProjectStatus Status { get; set; }
+        public DateTime? LastStart { get; set; }
+        public DateTime? LastPause { get; set; }
         public DateTime CreatedAt { get; set; }
         public User? user { get; set; }
 
