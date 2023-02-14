@@ -1,0 +1,32 @@
+@model RegisterProjectsViewModel
+
+@{
+    ViewData["title"] = "Registrar";
+}
+
+
+<div class="row">
+    <div>
+        <h1>Cadastro de Projeto</h1>
+    </div>
+    <div class="col-md-12">
+        <div asp-validation-summary="ModelOnly" class="val-summary text-danger mb-3"></div>
+        <form asp-action="Register">
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PriceByHours" class="control-label"></label>
+                <input asp-for="PriceByHours" class="form-control"/>
+                <span asp-validation-for="PriceByHours"></span>
+            </div>
+            <br>
+            <div class="form-group">
+                <input asp-action="Register" type="submit" value="Cadastrar" class="btn btn-primary"/>
+            </div>
+        </form>
+    </div>
+</div>
+

@@ -15,7 +15,8 @@ namespace myfreela.Models
         public DateTime? LastStart { get; set; }
         public DateTime? LastPause { get; set; }
         public DateTime CreatedAt { get; set; }
-        public User? user { get; set; }
+        public int UserId { get; set; }
+        public User? User { get; set; }
 
     }
 }

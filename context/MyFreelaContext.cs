@@ -17,5 +17,6 @@ namespace myfreela.context
 
         }
 
+        public DbSet<Projects>? Projects { get; set; }
     }
 }

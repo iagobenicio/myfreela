@@ -6,34 +6,44 @@
 
 
 <div class="row">
-    <div class="cold-md-4">
-        <input type="submit" value="Cadastrar" class="btn btn-primary">
+    <div asp-validation-summary="ModelOnly" class="val-summary text-danger mb-3"></div>
+    <div>
+        <a asp-action="Register"><input value="Novo" class="btn btn-primary" ></a>
     </div>
     <div class="col-md-12">
         <table class="table">
             <thead class="thead-dark">
                 <tr>
                     <th scope="col">Nome</th>
-                    <th scope="col">Utimo restart</th>
+                    <th scope="col">Utimo start</th>
+                    <th scope="col">Utimo pause</th>
+                    <th scope="col">Status</th>
                     <th scope="col">Preço/h</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Projeto freela</td>
-                    <td>09/02/2022 18:36</td>
-                    <td>R$ 35,00</td>
-                </tr>
-                <tr>
-                    <td>Projeto mobile</td>
-                    <td>09/05/2022 18:23</td>
-                    <td>R$ 25,00</td>
-                </tr>
-                <tr>
-                    <td>Projeto front</td>
-                    <td>09/03/2022 18:21</td>
-                    <td>R$ 25,00</td>
-                </tr>
+                @foreach (var project in Model)
+                {
+                    <tr>
+                        <td>@project.Name</td>
+                        <td>@project.LastStart</td>
+                        <td>@project.LastPause</td>
+                        <td>@project.Status</td>
+                        <td>@project.PriceByHours.ToString("C")</td>
+                        <td>
+                            <a href=""><button type="button" class="btn btn-outline-info btn-sm">Info</button></a>
+                            @if (@project.Status == ProjectStatus.Pendente || @project.Status == ProjectStatus.Pausado)
+                            {
+                                <a asp-action="StartOrPause" asp-route-projectId="@project.Id"><button type="button" class="btn btn-outline-success btn-sm">Iniciar</button></a>
+                            }
+                            @if(@project.Status == ProjectStatus.Ativo)
+                            {
+                                <a asp-action="StartOrPause" asp-route-projectId="@project.Id"><button type="button" class="btn btn-outline-dark btn-sm">Pausar</button></a>
+                            }
+                        </td>
+                    </tr>
+                }
             </tbody>
         </table>
     </div>
