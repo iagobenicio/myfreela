@@ -1,50 +1,78 @@
 @model IEnumerable<Projects>
-
+@using System.Globalization
 @{
     ViewData["title"] = "Projetos";
 }
 
 
-<div class="row">
-    <div asp-validation-summary="ModelOnly" class="val-summary text-danger mb-3"></div>
-    <div>
-        <a asp-action="Register"><input value="Novo" class="btn btn-primary" ></a>
-    </div>
-    <div class="col-md-12">
-        <table class="table">
-            <thead class="thead-dark">
-                <tr>
-                    <th scope="col">Nome</th>
-                    <th scope="col">Utimo start</th>
-                    <th scope="col">Utimo pause</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Preço/h</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var project in Model)
-                {
-                    <tr>
-                        <td>@project.Name</td>
-                        <td>@project.LastStart</td>
-                        <td>@project.LastPause</td>
-                        <td>@project.Status</td>
-                        <td>@project.PriceByHours.ToString("C")</td>
-                        <td>
-                            <a href=""><button type="button" class="btn btn-outline-info btn-sm">Info</button></a>
-                            @if (@project.Status == ProjectStatus.Pendente || @project.Status == ProjectStatus.Pausado)
-                            {
-                                <a asp-action="StartOrPause" asp-route-projectId="@project.Id"><button type="button" class="btn btn-outline-success btn-sm">Iniciar</button></a>
-                            }
-                            @if(@project.Status == ProjectStatus.Ativo)
-                            {
-                                <a asp-action="StartOrPause" asp-route-projectId="@project.Id"><button type="button" class="btn btn-outline-dark btn-sm">Pausar</button></a>
-                            }
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+
+<div asp-validation-summary="ModelOnly" class="val-summary text-danger mb-3"></div>
+<div>
+    <a asp-action="Register"><input value="Novo" class="btn btn-primary" ></a>
+</div>
+<table class="table">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">Nome</th>
+            <th scope="col">Utimo start</th>
+            <th scope="col">Utimo pause</th>
+            <th scope="col">Status</th>
+            <th scope="col">Preço/h</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var project in Model)
+        {
+            var value = project.TotalValue.ToString("C");
+            <tr>
+                <td>@project.Name</td>
+                <td>@project.LastStart</td>
+                <td>@project.LastPause</td>
+                <td>@project.Status</td>
+                <td>@project.PriceByHours.ToString("C")</td>
+                <td>
+                    <button type="button" class="btn btn-outline-info btn-sm" onclick="showModal('@project.Name','@project.CreatedAt','@value')" data-toggle="modal" data-target="#myModal">Info</button>
+                    @if (@project.Status == ProjectStatus.Pendente || @project.Status == ProjectStatus.Pausado)
+                    {
+                        <a asp-action="StartOrPause" asp-route-projectId="@project.Id"><button type="button" class="btn btn-outline-success btn-sm">Iniciar</button></a>
+                    }
+                    @if(@project.Status == ProjectStatus.Ativo)
+                    {
+                        <a asp-action="StartOrPause" asp-route-projectId="@project.Id"><button type="button" class="btn btn-outline-dark btn-sm">Pausar</button></a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"></h5>
+            </div>
+            <div class="modal-body" style="display: flex; flex-direction: column;">
+                <span id="createdAt"></span>
+                <span id="totalValue"></span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
     </div>
 </div>
+
+
+
+@section Scripts{
+    <script type="text/javascript"> 
+        function showModal(name,createdAt,totalValue)   
+        {   
+            document.getElementsByClassName("modal-title")[0].innerHTML = name
+            document.getElementById("createdAt").innerText = "Criado em: " + createdAt
+            document.getElementById("totalValue").innerText = "Total ganho: " + totalValue
+            $("#exampleModal").modal('show')
+        }
+    </script>
+}
