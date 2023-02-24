@@ -11,6 +11,7 @@ using myfreela.context;
 using myfreela.viewmodels;
 using Microsoft.EntityFrameworkCore;
 using myfreela.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace myfreela.Controllers
 {   
@@ -75,18 +76,24 @@ namespace myfreela.Controllers
 
                 if (resultLogin.Succeeded)
                 {
-                    return RedirectToAction("Index","Home");
+                    return RedirectToAction("Index","Projects");
                 }
                 if (resultLogin == Sigin.SignInResult.Failed)
                 {   
-                    Console.WriteLine("erro 1");
                     ModelState.AddModelError("","Falha ao logar");
                 }else
                 {   
-                    Console.WriteLine("erro 2");
-                    ModelState.AddModelError("","N"); 
+                    ModelState.AddModelError("","Algum erro ocorreu"); 
                 }     
             }
+            return RedirectToAction(nameof(Index));
+        }
+
+        [Authorize]
+        public async Task<IActionResult> Logout()
+        {
+            await _sigInManager.SignOutAsync();
+
             return RedirectToAction(nameof(Index));
         }
 

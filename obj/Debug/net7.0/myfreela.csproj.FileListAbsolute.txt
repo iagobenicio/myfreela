@@ -78,3 +78,4 @@ C:\Users\Pichau\Desktop\.net projetos\myfreela\obj\Debug\net7.0\refint\myfreela.
 C:\Users\Pichau\Desktop\.net projetos\myfreela\obj\Debug\net7.0\myfreela.pdb
 C:\Users\Pichau\Desktop\.net projetos\myfreela\obj\Debug\net7.0\myfreela.genruntimeconfig.cache
 C:\Users\Pichau\Desktop\.net projetos\myfreela\obj\Debug\net7.0\ref\myfreela.dll
+C:\Users\Pichau\Desktop\.net projetos\myfreela\obj\Debug\net7.0\scopedcss\Views\Shared\_LoggedLayout.cshtml.rz.scp.css
