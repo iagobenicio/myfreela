@@ -10,6 +10,7 @@
 <div>
     <a asp-action="Register"><input value="Novo" class="btn btn-primary" ></a>
 </div>
+
 <table class="table">
     <thead class="thead-dark">
         <tr>
@@ -22,6 +23,7 @@
         </tr>
     </thead>
     <tbody>
+        
         @foreach (var project in Model)
         {
             var value = project.TotalValue.ToString("C");
@@ -46,6 +48,7 @@
         }
     </tbody>
 </table>
+
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModal" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -57,13 +60,11 @@
                 <span id="totalValue"></span>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Ok</button>
             </div>
         </div>
     </div>
 </div>
-
-
 
 @section Scripts{
     <script type="text/javascript"> 
@@ -73,6 +74,10 @@
             document.getElementById("createdAt").innerText = "Criado em: " + createdAt
             document.getElementById("totalValue").innerText = "Total ganho: " + totalValue
             $("#exampleModal").modal('show')
+        }
+        function showModalEditProject()
+        {
+
         }
     </script>
 }

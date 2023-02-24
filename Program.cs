@@ -17,6 +17,10 @@ builder.Services.AddIdentity<User,IdentityRole<int>>(
         options.Password.RequireUppercase = false;
     }).AddEntityFrameworkStores<MyFreelaContext>().AddDefaultTokenProviders();
 
+builder.Services.ConfigureApplicationCookie(options => {
+    options.LoginPath = "/";
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

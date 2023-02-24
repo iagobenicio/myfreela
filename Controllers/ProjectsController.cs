@@ -36,7 +36,7 @@ namespace myfreela.Controllers
             } 
 
             var projects = GetAllProjects(user.Id);
-
+            
             return View(projects);  
 
         }
