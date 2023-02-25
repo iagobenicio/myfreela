@@ -48,13 +48,12 @@ namespace myfreela.Controllers
 
                 if (result.Succeeded)
                 {   
-                    return View();
+                    return RedirectToAction(nameof(Index));
                 }
                 foreach (var erro in result.Errors)
                 {
                     ModelState.AddModelError("",erro.Description);
                 }
-                return View();
             }
             return View();
 
