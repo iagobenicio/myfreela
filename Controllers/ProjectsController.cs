@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -36,7 +32,7 @@ namespace myfreela.Controllers
             } 
 
             var projects = GetAllProjects(user.Id);
-            
+
             return View(projects);  
 
         }
@@ -81,6 +77,75 @@ namespace myfreela.Controllers
             
         }
 
+        public async Task<IActionResult> Edit(int projectId)
+        {
+            var currentUser = await GetCurrentUser();
+
+            if (currentUser == null)
+            {   
+                return RedirectToAction("Index","User");
+            }
+
+            var project = GetProjectById(projectId, currentUser.Id);
+            var projectVm = new RegisterProjectsViewModel();
+
+            if (project != null)
+            {
+                projectVm.Id = project.Id;
+                projectVm.Name = project.Name;
+                projectVm.PriceByHours = project.PriceByHours;
+
+                return View(projectVm);
+            }
+
+            return RedirectToAction(nameof(Index));
+
+        }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> Edit(RegisterProjectsViewModel projectsViewModelEdit)
+        {   
+            
+            var currentUser = await GetCurrentUser();
+
+            if (currentUser == null)
+            {   
+                return RedirectToAction("Index","User");
+            }
+
+            var project = GetProjectById(projectsViewModelEdit.Id,currentUser.Id);
+            
+            if (project != null)
+            {   
+                try
+                {
+                    project.Name = projectsViewModelEdit.Name;
+                    project.PriceByHours = projectsViewModelEdit.PriceByHours;
+
+                    var result = _projectsContext.Projects!.Update(project); 
+                    await _projectsContext.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (DbUpdateException)
+                {
+                    ModelState.AddModelError("","Erro ao salvar os dados");
+                }
+                catch (OperationCanceledException)
+                {
+                    ModelState.AddModelError("","Operação cancelada");
+                }
+                catch (Exception e)
+                {
+                    ModelState.AddModelError("",$"Algum erro ocorreu {e.ToString()}");
+                }
+                return RedirectToAction(nameof(Edit));
+            }
+
+            return RedirectToAction(nameof(Index));
+
+        }
+
         [Authorize]
         public async Task<IActionResult> StartOrPause(int projectId)
         {   
@@ -91,7 +156,7 @@ namespace myfreela.Controllers
                 return RedirectToAction("Index","User");
             }
 
-            var project = _projectsContext.Projects!.Where(x => x.Id == projectId).Where(x => x.UserId == currentUser.Id).FirstOrDefault();
+            var project = GetProjectById(projectId,currentUser.Id);
 
             if (project != null)
             {
@@ -162,6 +227,12 @@ namespace myfreela.Controllers
             var projetos = _projectsContext.Projects!.Where(p => p.UserId == userLogged).ToList();
             return projetos;
         }
+
+        private Projects? GetProjectById(int projectId,int userId)
+        {   
+            return _projectsContext.Projects!.Where(x => x.Id == projectId).Where(x => x.UserId == userId).FirstOrDefault();
+        }
+
         private async Task<User?> GetCurrentUser()
         {
             return await _userManager.GetUserAsync(HttpContext.User);

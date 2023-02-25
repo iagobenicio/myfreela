@@ -1,15 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Sigin = Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using myfreela.context;
 using myfreela.viewmodels;
-using Microsoft.EntityFrameworkCore;
 using myfreela.Models;
 using Microsoft.AspNetCore.Authorization;
 

@@ -1,7 +1,7 @@
 @model RegisterProjectsViewModel
 
 @{
-    ViewData["title"] = "Registrar";
+    ViewData["title"] = "Editar";
     Layout = "~/Views/Shared/_LoggedLayout.cshtml";
 }
 
@@ -9,24 +9,25 @@
 
 <div class="row">
     <div>
-        <h1>Cadastro de Projeto</h1>
+        <h1>Editar Proejto</h1>
     </div>
     <div class="col-md-12">
         <div asp-validation-summary="ModelOnly" class="val-summary text-danger mb-3"></div>
-        <form asp-action="Register">
+        <form asp-action="Edit">
+            <input asp-for="Id" type="hidden" value="@Model.Id">
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
+                <input asp-for="Name" class="form-control" value="@Model.Name"/>
                 <span asp-validation-for="Name"></span>
             </div>
             <div class="form-group">
                 <label asp-for="PriceByHours" class="control-label"></label>
-                <input asp-for="PriceByHours" class="form-control"/>
+                <input asp-for="PriceByHours" class="form-control" value="@Model.PriceByHours"/>
                 <span asp-validation-for="PriceByHours"></span>
             </div>
             <br>
             <div class="form-group">
-                <input type="submit" value="Cadastrar" class="btn btn-primary"/>
+                <input type="submit" value="Editar" class="btn btn-primary"/>
             </div>
         </form>
     </div>

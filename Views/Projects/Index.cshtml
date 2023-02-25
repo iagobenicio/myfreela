@@ -1,5 +1,5 @@
 @model IEnumerable<Projects>
-@using System.Globalization
+
 @{
     ViewData["title"] = "Projetos";
     Layout = "~/Views/Shared/_LoggedLayout.cshtml";
@@ -43,6 +43,7 @@
                     {
                         <a asp-action="StartOrPause" asp-route-projectId="@project.Id"><button type="button" class="btn btn-outline-dark btn-sm">Pausar</button></a>
                     }
+                    <a asp-action="Edit" asp-route-projectId="@project.Id"><button type="button" class="btn btn-outline-warning btn-sm">Editar</button></a> 
                 </td>
             </tr>
         }
@@ -74,10 +75,6 @@
             document.getElementById("createdAt").innerText = "Criado em: " + createdAt
             document.getElementById("totalValue").innerText = "Total ganho: " + totalValue
             $("#exampleModal").modal('show')
-        }
-        function showModalEditProject()
-        {
-
         }
     </script>
 }
