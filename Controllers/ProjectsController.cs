@@ -73,7 +73,7 @@ namespace myfreela.Controllers
                 ModelState.AddModelError("",$"Algum erro ocorreu {e.ToString()}");
             }
 
-            return RedirectToAction(nameof(Register));
+            return View();
             
         }
 
@@ -139,7 +139,7 @@ namespace myfreela.Controllers
                 {
                     ModelState.AddModelError("",$"Algum erro ocorreu {e.ToString()}");
                 }
-                return RedirectToAction(nameof(Edit));
+                return View();
             }
 
             return RedirectToAction(nameof(Index));
