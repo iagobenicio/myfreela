@@ -20,4 +20,6 @@ Ex: Valor por hora é 30, se trabalhado 2 minutos, ganha R$ 1.
 
 # Imagens 
 
+![Frame 1 (19)](https://user-images.githubusercontent.com/52904825/221380419-120d88b4-9cb1-487f-a685-5cfbf85dd3aa.png)
+
 
