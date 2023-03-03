@@ -8,11 +8,11 @@ namespace myfreela.viewmodels
         public int Id { get; set; }
 
         [Display(Name = "Nome do projeto")]
-        [Required]
+        [Required(ErrorMessage = "Este campo é obrigatório")]
         public string? Name { get; set; }
 
         [Display(Name = "Preço por hora")]
-        [Required]
+        [Required(ErrorMessage = "Este campo é obrigatório")]
         public decimal PriceByHours { get; set; }
     }
 }
